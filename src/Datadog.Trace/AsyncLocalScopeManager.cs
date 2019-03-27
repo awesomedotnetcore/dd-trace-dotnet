@@ -22,18 +22,10 @@ namespace Datadog.Trace
         {
             var current = _activeScope.Get();
 
-            if (current != scope)
+            if (scope == current)
             {
-                Log.Warn("Specified scope is not the active scope.");
+                _activeScope.Set(current.Parent);
             }
-
-            if (current == null)
-            {
-                Log.Error("Trying to close a null scope.");
-                return;
-            }
-
-            _activeScope.Set(current.Parent);
         }
     }
 }
